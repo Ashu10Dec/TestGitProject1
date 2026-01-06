@@ -1,19 +1,17 @@
-import sys
+from flask import Flask, request
 
-def main():
-    if len(sys.argv) < 2:
-        print("Please pass a number (1 or 2)")
-        return
-    
-    arg = sys.argv[1]
-    
-    if arg == "1":
-        print("HELLO")
-    elif arg == "2":
-        print("BYE")
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    value = request.args.get("value")
+
+    if value == "1":
+        return "HELLO"
+    elif value == "2":
+        return "BYE"
     else:
-        print(f"Unknown argument: {arg}. Please pass 1 or 2")
+        return "Please pass value=1 or value=2 in the URL"
 
 if __name__ == "__main__":
-    main()
-
+    app.run(host="0.0.0.0", port=8080)
